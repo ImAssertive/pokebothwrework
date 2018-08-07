@@ -8,7 +8,7 @@ class pokestopCog:
 
     @commands.command()
     async def info(self, ctx, *, stopname):
-        result = await self.searchStops(stopname)
+        result = await self.searchStops(ctx, stopname)
         if result:
             embed = discord.Embed(title="Menu Loading...", description="Please stand by.", colour=self.bot.getcolour())
             menu = await ctx.channel.send(embed = embed)
@@ -22,7 +22,7 @@ class pokestopCog:
         else:
             await ctx.channel.send(":no_entry: | Pokestop not found.")
 
-    async def searchStops(self, stopname):
+    async def searchStops(self, ctx, stopname):
         query = "SELECT * FROM Pokestops"
         results = await ctx.bot.db.fetch(query)
         for result in results:
