@@ -149,6 +149,7 @@ class pokestopCog:
                 except asyncio.TimeoutError:
                     timeout = True
                     await ctx.channel.send(":no_entry: | **" + ctx.author.display_name + "** The command window has closed due to inactivity. Please use the addstop command again to restart the proccess.")
+                    break
                 else:
                     if "://" in msg.content:
                         print("wew")
