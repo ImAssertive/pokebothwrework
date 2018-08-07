@@ -45,6 +45,8 @@ class pokestopCog:
     async def imageMenu(self, ctx, menu, result, images, pageNumber):
         embed = discord.Embed(description="Use the reactions to navigate the menu.", colour=self.bot.getcolour())
         embed.set_image(url=images[pageNumber-2]["url"])
+        if images[pageNumber-2]["infotext"]:
+            embed.add_field(name="Additional Info:", value=images[pageNumber-2]["infotext"])
         embed.set_footer(text="Page ("+str(pageNumber)+"/"+str(len(images)+1)+")     bot made by Zootopia#0001")
         embed.set_author(icon_url="https://i.imgur.com/eXKzHVr.jpg", name="Image of: " + result["name"])
         await menu.edit(embed=embed)
@@ -129,13 +131,12 @@ class pokestopCog:
             if result:
                 connection = await self.bot.db.acquire()
                 async with connection.transaction():
-                    for member in ctx.guild.members:
-                        if subText[2]:
-                            query = "INSERT INTO Images (stopID, url, infotext) VALUES($1, $2, $3) ON CONFLICT DO NOTHING"
-                            await self.bot.db.execute(query, result["stopid"], url, subText[2])
-                        else:
-                            query = "INSERT INTO Images (stopID, url) VALUES($1, $2) ON CONFLICT DO NOTHING"
-                            await self.bot.db.execute(query, result["stopid"], url)
+                    if subText[2]:
+                        query = "INSERT INTO Images (stopID, url, infotext) VALUES($1, $2, $3) ON CONFLICT DO NOTHING"
+                        await self.bot.db.execute(query, result["stopid"], url, subText[2])
+                    else:
+                        query = "INSERT INTO Images (stopID, url) VALUES($1, $2) ON CONFLICT DO NOTHING"
+                        await self.bot.db.execute(query, result["stopid"], url)
                 await self.bot.db.release(connection)
                 await ctx.channel.send(":white_check_mark: | Image added!")
 
