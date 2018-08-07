@@ -45,7 +45,7 @@ class pokestopCog:
     async def imageMenu(self, ctx, menu, result, images, pageNumber):
         embed = discord.Embed(description="Use the reactions to navigate the menu.", colour=self.bot.getcolour())
         embed.set_image(url=images[pageNumber-2]["url"])
-        embed.set_footer(text="Page ("+pageNumber+"/"+str(len(images)+1)+")     bot made by Zootopia#0001")
+        embed.set_footer(text="Page ("+str(pageNumber)+"/"+str(len(images)+1)+")     bot made by Zootopia#0001")
         embed.set_author(icon_url="https://i.imgur.com/eXKzHVr.jpg", name="Image of: " + result["name"])
         await menu.edit(embed=embed)
         options = useful.getInfoMenuEmoji()
