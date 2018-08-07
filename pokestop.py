@@ -130,7 +130,7 @@ class pokestopCog:
                 connection = await self.bot.db.acquire()
                 async with connection.transaction():
                     for member in ctx.guild.members:
-                        if subtext[2]:
+                        if subText[2]:
                             query = "INSERT INTO Images (stopID, url, infotext) VALUES($1, $2, $3) ON CONFLICT DO NOTHING"
                             await self.bot.db.execute(query, result["stopID"], url, subText[2])
                         else:
