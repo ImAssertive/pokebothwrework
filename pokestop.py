@@ -118,6 +118,32 @@ class pokestopCog:
 
     @commands.command()
     @checks.justme()
+    async def addimage(self, ctx, *, subText):
+        subText = subText.split(" | ")
+        stopname = subText[0]
+        url = subText[1]
+        if "http://" in url == False and "https://" in url == False:
+            await ctx.channel.send(":no_entry: | This URL appears to be invalid.")
+        else:
+            result = await self.searchStops(ctx, stopname)
+            if result:
+                connection = await self.bot.db.acquire()
+                async with connection.transaction():
+                    for member in ctx.guild.members:
+                        if subtext[2]:
+                            query = "INSERT INTO Images (stopID, url, infotext) VALUES($1, $2, $3) ON CONFLICT DO NOTHING"
+                            await self.bot.db.execute(query, result["stopID"], url, subText[2])
+                        else:
+                            query = "INSERT INTO Images (stopID, url) VALUES($1, $2) ON CONFLICT DO NOTHING"
+                            await self.bot.db.execute(query, result["stopID"], url)
+                await self.bot.db.release(connection)
+                await ctx.channel.send(":white_check_mark: | Image added!")
+
+            else:
+                await ctx.channel.send(":no_entry: | Pokestop not found.")
+
+    @commands.command()
+    @checks.justme()
     async def addstop(self, ctx):
         stoptype = "wew"
         await ctx.channel.send(":rotating_light: | Please enter the type of the stop.")
