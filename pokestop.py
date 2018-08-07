@@ -82,7 +82,7 @@ class pokestopCog:
                 await closed.delete()
 
     async def infoMainMenu(self, ctx, menu, result, images, pageNumber):
-            embed = discord.Embed(title="Here is the information for stop: "+result["name"], description="Use the reactions to navigate the menu.", colour=self.bot.getcolour(), url=result["mapurl"])
+            embed = discord.Embed(title="Google Maps Link: "+result["name"], description="Use the reactions to navigate the menu.", colour=self.bot.getcolour(), url=result["mapurl"])
             embed.add_field(name=result["type"].title()+" name:", value=result["name"])
             embed.add_field(name=result["type"].title()+" coordinates:", value=result["coord"])
             embed.add_field(name=result["type"].title()+" notes:", value=result["notes"], inline=False)
