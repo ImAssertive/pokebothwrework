@@ -82,12 +82,12 @@ class pokestopCog:
                 await closed.delete()
 
     async def infoMainMenu(self, ctx, menu, result, images, pageNumber):
-            embed = discord.Embed(description="Use the reactions to navigate the menu.", colour=self.bot.getcolour(), url=result["mapurl"])
+            embed = discord.Embed(title="Here is the information for stop: "+result["name"], description="Use the reactions to navigate the menu.", colour=self.bot.getcolour(), url=result["mapurl"])
             embed.add_field(name=result["type"].title()+" name:", value=result["name"])
             embed.add_field(name=result["type"].title()+" coordinates:", value=result["coord"])
             embed.add_field(name=result["type"].title()+" notes:", value=result["notes"], inline=False)
             embed.set_footer(text="Page (1/"+str(len(images)+1)+")     bot made by Assertive#0001")
-            embed.set_author(icon_url="https://i.imgur.com/eXKzHVr.jpg",name="Here is the information for stop: "+result["name"])
+            embed.set_author(icon_url="https://i.imgur.com/eXKzHVr.jpg", name="Pokebot High Wycombe")
             await menu.edit(embed=embed)
             options = useful.getInfoMenuEmoji()
             def info_emojis_main_menu(reaction, user):
