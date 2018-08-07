@@ -26,7 +26,7 @@ class pokestopCog:
         query = "SELECT * FROM Pokestops"
         results = await ctx.bot.db.fetch(query)
         for result in results:
-            if stopname.lower() == result["name"] or stopname.lower() in result["aliases"].split(", "):
+            if stopname.title() == result["name"].title() or stopname.title() in result["aliases"].split(", "):
                 return result
         return False
 
@@ -151,7 +151,7 @@ class pokestopCog:
                     await ctx.channel.send(":no_entry: | **" + ctx.author.display_name + "** The command window has closed due to inactivity. Please use the addstop command again to restart the proccess.")
                     break
                 else:
-                    option[1] = msg.content
+                    option[1] = msg.content.title()
                     await entryrequest.delete()
             if not timeout:
                 embed = discord.Embed(description="Please type confirm to confirm adding to database or cancel to discard.", colour=self.bot.getcolour())
