@@ -16,7 +16,7 @@ class pokestopCog:
             for emoji in range(0,len(emojis)):
                 await menu.add_reaction(emojis[emoji])
             query = "SELECT * FROM Images WHERE stopID = $1"
-            images = await ctx.bot.db.fetch(query, result["stopID"])
+            images = await ctx.bot.db.fetch(query, result["stopid"])
             pageNumber = 1
             await self.menuController(ctx, menu, result, images, pageNumber)
         else:
@@ -132,10 +132,10 @@ class pokestopCog:
                     for member in ctx.guild.members:
                         if subText[2]:
                             query = "INSERT INTO Images (stopID, url, infotext) VALUES($1, $2, $3) ON CONFLICT DO NOTHING"
-                            await self.bot.db.execute(query, result["stopID"], url, subText[2])
+                            await self.bot.db.execute(query, result["stopid"], url, subText[2])
                         else:
                             query = "INSERT INTO Images (stopID, url) VALUES($1, $2) ON CONFLICT DO NOTHING"
-                            await self.bot.db.execute(query, result["stopID"], url)
+                            await self.bot.db.execute(query, result["stopid"], url)
                 await self.bot.db.release(connection)
                 await ctx.channel.send(":white_check_mark: | Image added!")
 
