@@ -151,11 +151,7 @@ class pokestopCog:
                     await ctx.channel.send(":no_entry: | **" + ctx.author.display_name + "** The command window has closed due to inactivity. Please use the addstop command again to restart the proccess.")
                     break
                 else:
-                    if "://" in msg.content:
-                        print("wew")
-                        option[1] = msg.content
-                    else:
-                        option[1] = msg.content.lower()
+                    option[1] = msg.content
                     await entryrequest.delete()
             if not timeout:
                 embed = discord.Embed(description="Please type confirm to confirm adding to database or cancel to discard.", colour=self.bot.getcolour())
@@ -180,7 +176,7 @@ class pokestopCog:
                     elif msg.content.lower() == "confirm":
                         connection = await self.bot.db.acquire()
                         async with connection.transaction():
-                            query = "INSERT INTO Pokestops (name, aliases, mapurl, coord, notes, type) VALUES($1, $2, $3, $4, $5, %6) ON CONFLICT DO NOTHING"
+                            query = "INSERT INTO Pokestops (name, aliases, mapurl, coord, notes, type) VALUES ($1, $2, $3, $4, $5, $6) ON CONFLICT DO NOTHING"
                             await self.bot.db.execute(query, stoptextlist[0][1], stoptextlist[1][1], stoptextlist[2][1], stoptextlist[3][1], stoptextlist[4][1], stoptype)
                         await self.bot.db.release(connection)
                         await ctx.channel.send(":white_check_mark: | "+stoptype.title()+" added!")
