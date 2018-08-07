@@ -82,7 +82,7 @@ class pokestopCog:
                 await closed.delete()
 
     async def infoMainMenu(self, ctx, menu, result, images, pageNumber):
-            embed = discord.Embed(description="Use the reactions to navigate the menu.", colour=self.bot.getcolour())
+            embed = discord.Embed(description="Use the reactions to navigate the menu.", colour=self.bot.getcolour(), url=result["mapurl"])
             embed.add_field(name=result["type"].title()+" name:", value=result["name"])
             embed.add_field(name=result["type"].title()+" coordinates:", value=result["coord"])
             embed.add_field(name=result["type"].title()+" notes:", value=result["notes"], inline=False)
@@ -95,7 +95,7 @@ class pokestopCog:
             try:
                 reaction, user = await self.bot.wait_for('reaction_add', check=info_emojis_main_menu, timeout=60.0)
             except asyncio.TimeoutError:
-                ctx.channel.send(":no_entry: | **" + ctx.author.display_name + "** The command menu has closed due to inactivity.")
+                await ctx.channel.send(":no_entry: | **" + ctx.author.display_name + "** The command menu has closed due to inactivity.")
                 await menu.delete()
             else:
                 await menu.remove_reaction(reaction.emoji, user)
@@ -176,6 +176,7 @@ class pokestopCog:
                 except asyncio.TimeoutError:
                     timeout = True
                     await ctx.channel.send(":no_entry: | **" + ctx.author.display_name + "** The command window has closed due to inactivity. Please use the addstop command again to restart the proccess.")
+                    await entryrequest.delete()
                     break
                 else:
                     option[1] = msg.content.title()
